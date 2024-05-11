@@ -6,6 +6,7 @@ Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
 
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'view'])->name('login.view')->middleware('guest');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login')->middleware('guest');
+Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/signup', [App\Http\Controllers\Auth\RegisterUserController::class, 'view'])->name('signup.view');
 Route::post('/signup', [App\Http\Controllers\Auth\RegisterUserController::class, 'register'])->name('signup');

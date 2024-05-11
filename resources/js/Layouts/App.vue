@@ -23,9 +23,12 @@ import { Link } from '@inertiajs/vue3'
               <li class="nav-item">
                 <Link :href="route('signup.view')" class="nav-link">Signup</Link>
               </li>
+              <li class="nav-item">
+                <Link :href="route('company.view')" class="nav-link me-4">Admin</Link>
+              </li>
             </ul>
             <div class="d-flex" role="search">
-              <Link :href="route('company.view')" class="nav-link me-4">Admin</Link>
+              <Link href="/logout" method="post" class="nav-link me-4">Logout</Link>
             </div>
           </div>
         </div>

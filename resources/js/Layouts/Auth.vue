@@ -24,7 +24,7 @@ import { Link } from '@inertiajs/vue3'
               </li>
             </ul>
             <div class="d-flex" role="search">         
-              <Link href="/logout" class="nav-link me-4">Logout</Link>
+              <Link href="/logout" method="post" class="nav-link me-4">Logout</Link>
             </div>
           </div>
         </div>
