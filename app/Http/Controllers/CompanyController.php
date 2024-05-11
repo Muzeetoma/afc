@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\CompanyService;
 use App\Services\Dto\Company\AddCompanyDto;
@@ -17,7 +18,10 @@ class CompanyController extends Controller
 
     public function getAll(){
         $companies = $this->companyService->getAllByPage(3);
-        return response()->json(['company' => $companies], 200);
+        return Inertia::render('Index', [
+            'companies' => $companies
+          ]);
+       // return response()->json(['company' => $companies], 200);
     }
 
     public function getByUser(){
@@ -34,7 +38,7 @@ class CompanyController extends Controller
         $updateCompanyDto = new UpdateCompanyDto();
         $updateCompanyDto->email = 'k@mail.com';
         $updateCompanyDto->companyId = 4;
-        
+
         $this->companyService->update($updateCompanyDto);
     }
 }

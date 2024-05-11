@@ -2,9 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
+
 
 Route::post('/users', [App\Http\Controllers\UserController::class, 'create']);
 Route::put('/users/update', [App\Http\Controllers\UserController::class, 'update']);
