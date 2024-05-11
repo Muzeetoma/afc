@@ -8,21 +8,17 @@ use App\Services\Dto\Country\CountryDto;
 use App\Services\Dto\Service\ServiceDto;
 use App\Services\Dto\Company\CreateCompanyDto;
 use App\Mappers\UserMapper;
-use App\Services\CompanyService;
 use App\Services\CountryService;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserService{
 
     private $userRepository;
-    private $companyService;
     private $countryService;
 
     public function __construct(UserRepository $userRepository,
-                                CompanyService $companyService,
                                 CountryService $countryService) {
         $this->userRepository = $userRepository;
-        $this->companyService = $companyService;
         $this->countryService = $countryService;
     }
 
@@ -47,20 +43,17 @@ class UserService{
             $user = UserMapper::createUser($userDto);
             $user->country()->associate($country);
             if($user->save()){
-                echo "Success: user created successfully";
+                session()->flash('message','User created successfully');
+                return $user;
             }
         } catch (\Exception $ex) {
-            echo "Error: " . $ex->getMessage();
+            session()->flash('error', $ex->getMessage());
         }
     }
 
     public function update(UpdateUserDto $updateUserDto){
         try{
-            $user = $this->userRepository->findByUserId($updateUserDto->userId);
-            if(empty($user)){
-                throw new \Exception('User with id ' . $updateUserDto->userId . ' does not exist');  
-            }
-
+            $user = Auth::user();
             if(!empty($updateUserDto->mobile)){
                 $userByMobile = $this->userRepository->findByMobile($updateUserDto->mobile); 
                 if(!empty($userByMobile)){
@@ -85,10 +78,10 @@ class UserService{
 
             $user = UserMapper::updateUser($user, $updateUserDto);
             if($user->save()){
-                echo "Success: user updated successfully";
+                session()->flash('message','User updated successfully');
             }
         } catch (\Exception $ex) {
-            echo "Error: " . $ex->getMessage();
+            session()->flash('error', $ex->getMessage());
         }
     }
 

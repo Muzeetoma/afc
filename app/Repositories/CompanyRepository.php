@@ -10,8 +10,12 @@ class CompanyRepository{
     return Company::find($id);
    }
 
-   public function findByPage(int $limit){
-    return Company::with('country')->with('user')->paginate($limit);
+   public function findByCompanyId(int $id){
+    return Company::where('id','=',$id)->with('country')->with('user')->with('services')->first();
+   }
+
+   public function findByPage(int $page){
+    return Company::with('country')->with('user')->paginate($page);
    }
 
    public function findByName(string $name){

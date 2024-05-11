@@ -4,7 +4,6 @@ namespace App\Services;
 use App\Repositories\ServiceRepository;
 use App\Repositories\CompanyRepository;
 use App\Mappers\ServiceMapper;
-use App\Models\User;
 use App\Services\Dto\Service\ServiceDto;
 use App\Services\Dto\Service\UpdateServiceDto;
 use Illuminate\Support\Facades\Auth;
@@ -36,10 +35,10 @@ class Services{
             $service->company()->associate($company);
            
             if($service->save()){
-                echo "Success: service created successfully";
+                session()->flash('message','Service added successfully');
             }
         }catch(\Exception $ex){
-            echo "Error: " . $ex->getMessage();
+            session()->flash('error', $ex->getMessage());
         }
     }
 
@@ -58,17 +57,16 @@ class Services{
             $service = ServiceMapper::updateService($service,$updateServiceDto);
             
             if($service->save()){
-                echo "Success: service updated successfully";
+                session()->flash('message','Service updated successfully');
             }
         }catch(\Exception $ex){
-            echo "Error: " . $ex->getMessage();
+            session()->flash('error', $ex->getMessage());
         }
     }
 
     public function delete($id){
         try{
-            //$user = Auth::user();
-            $user = User::find(1);
+            $user = Auth::user();
             $userCompanies = $user->companies;
 
             $service = $this->serviceRepository->findById($id);
@@ -79,9 +77,11 @@ class Services{
                 throw new \Exception('Service with name ' . $service->name 
                                       . ' does not exist in company ' . $company->name);
             }
-            return $service->delete();
+            if($service->delete()){
+                session()->flash('message','Service deleted successfully');
+            }
         }catch(\Exception $ex){
-            echo "Error: " . $ex->getMessage();
+            session()->flash('error', $ex->getMessage());
         }
     }
 

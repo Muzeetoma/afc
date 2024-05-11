@@ -6,8 +6,6 @@ use App\Services\Dto\Company\CreateCompanyDto;
 use App\Services\Dto\Company\AddCompanyDto;
 use App\Services\Dto\Company\UpdateCompanyDto;
 use App\Mappers\CompanyMapper;
-use App\Models\User;
-use App\Models\Country;
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,13 +18,16 @@ class CompanyService{
         $this->companyRepository = $companyRepository;
     }
 
+    public function getCompanyById($id){
+        return $this->companyRepository->findByCompanyId($id);
+    }
+
     public function getAllByPage(int $page){
         return $this->companyRepository->findByPage($page);
     }
     
     public function getByUser(){
-        //$user = Auth::user();
-        $user = User::find(1);
+        $user = Auth::user();
         return $user->companies;
     }
 
@@ -41,29 +42,30 @@ class CompanyService{
         $company->country()->associate($createCompanyDto->country);
         $company->user()->associate($createCompanyDto->user);
         if($company->save()){
-            echo "Success: company created successfully";
+            session()->flash('message','Company created successfully');
         }
     }
 
     public function add(AddCompanyDto $addCompanyDto){
         try{ 
-            //$user = Auth::user();
-            $user = User::find(1);
+            $user = Auth::user();
             if($user->companies->count() === $this->maxCountries){
                 throw new \Exception('You can only have a maximum of ' . $this->maxCountries .' countries'); 
             }
             $country = $user->country;
-            $createCompanyDto = new CreateCompanyDto($addCompanyDto->name, $addCompanyDto->name, $country ,$user);
+            $createCompanyDto = new CreateCompanyDto($addCompanyDto->name, 
+                                                     $addCompanyDto->email, 
+                                                     $country,
+                                                     $user);
             $this->create($createCompanyDto);
         }catch(\Exception $ex){
-            echo "Error: " . $ex->getMessage();
+            session()->flash('error', $ex->getMessage());
         }
     }
 
     public function update(UpdateCompanyDto $updateCompanyDto){
-     try{
-            //$user = Auth::user();
-            $user = User::find(1);
+        try{
+            $user = Auth::user();
             $company = $this->companyRepository->findById($updateCompanyDto->companyId);
             if(empty($company)){
                 throw new \Exception('Company with id ' . $updateCompanyDto->companyId . ' does not exist');
@@ -79,17 +81,16 @@ class CompanyService{
             }
             $company = CompanyMapper::updateCompany($company,$updateCompanyDto);
             if($company->save()){
-                echo "Success: company created successfully";
+                session()->flash('message','Company updated successfully');
             }
         }catch(\Exception $ex){
-            echo "Error: " . $ex->getMessage();
+            session()->flash('error', $ex->getMessage());
         }
     }
 
     public function delete($companyId){
         try{
-            //$user = Auth::user();
-            $user = User::find(1);
+            $user = Auth::user();
             $company = $this->companyRepository->findById($companyId);
             if(empty($company)){
                 throw new \Exception('Company with id ' . $companyId . ' does not exist');
@@ -98,10 +99,10 @@ class CompanyService{
                 throw new \Exception('Company ' . $company->name . ' does not belong to you');   
             }
             if($company->delete()){
-                echo "Success: company deleted successfully";
+                session()->flash('message','Company deleted!');
             }
         }catch(\Exception $ex){
-            echo "Error: " . $ex->getMessage();
+            session()->flash('error', $ex->getMessage());
         }
     }
 }

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateServiceRequest;
 use App\Services\Services;
 use App\Services\Dto\Service\ServiceDto;
 use App\Services\Dto\Service\UpdateServiceDto;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
@@ -15,13 +18,19 @@ class ServiceController extends Controller
         $this->services = $services;
     }
 
+    public function view(){
+        $user = Auth::user();
+        return Inertia::render('Admin/ServiceCreate',[
+            'companies' => $user->companies]);
+    }
+
     public function getByCompany($id){
         $services = $this->services->getByCompany(1);
         return response()->json(['company' => $services], 200);
     }
 
-    public function create(Request $request){
-        $serviceDto = new ServiceDto(4, 'Cleaning services');
+    public function create(CreateServiceRequest $request){
+        $serviceDto = new ServiceDto($request->company_id, $request->service);
         $this->services->create($serviceDto);
     }
 

@@ -15,4 +15,8 @@ class CountryService{
     public function getByName(string $name){
         return $this->countryRepository->findByName($name);
     }
+
+    public function getAll(){
+        return $this->countryRepository->findAll();
+    }
 }

@@ -17,15 +17,14 @@ import { Link } from '@inertiajs/vue3'
                 <Link href="/" class="nav-link">Home</Link>
               </li>
               <li class="nav-item">
-                <Link :href="route('login.view')" class="nav-link">Login</Link>
+                <Link :href="route('company.view')" class="nav-link">Add company</Link>
               </li>
-              
               <li class="nav-item">
-                <Link :href="route('signup.view')" class="nav-link">Signup</Link>
+                <Link :href="route('services.view')" class="nav-link">Add services</Link>
               </li>
             </ul>
-            <div class="d-flex" role="search">
-              <Link :href="route('company.view')" class="nav-link me-4">Admin</Link>
+            <div class="d-flex" role="search">         
+              <Link href="/logout" class="nav-link me-4">Logout</Link>
             </div>
           </div>
         </div>
@@ -33,6 +32,13 @@ import { Link } from '@inertiajs/vue3'
 
     </header>
     <article>
+      
+      <div class="position-absolute top-0 end-0 mt-5 p-2 w-25"  v-if="$page.props.flash.message">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ $page.props.flash.message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+       </div>
+      </div>
 
       <slot />
     </article>

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\UserRepository;
 use App\Repositories\CountryRepository;
@@ -46,9 +47,8 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(UserService::class, function ($app) {
             $userRepository = $app->make(UserRepository::class);
-            $companyService = $app->make(CompanyService::class);
             $countryService = $app->make(CountryService::class);
-            return new UserService($userRepository,$companyService,$countryService);
+            return new UserService($userRepository,$countryService);
         });
           
     }
@@ -58,6 +58,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        JsonResource::withoutWrapping();
     }
 }
