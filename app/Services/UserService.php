@@ -46,9 +46,9 @@ class UserService{
 
             $user = UserMapper::createUser($userDto);
             $user->country()->associate($country);
-            $user->save();
-
-            return $user;
+            if($user->save()){
+                echo "Success: user created successfully";
+            }
         } catch (\Exception $ex) {
             echo "Error: " . $ex->getMessage();
         }
@@ -83,10 +83,10 @@ class UserService{
                 $user->country()->associate($country);
             }
 
-            $newUser = UserMapper::updateUser($user, $updateUserDto);
-            $user->save();
-
-            return $user;
+            $user = UserMapper::updateUser($user, $updateUserDto);
+            if($user->save()){
+                echo "Success: user updated successfully";
+            }
         } catch (\Exception $ex) {
             echo "Error: " . $ex->getMessage();
         }

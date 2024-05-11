@@ -34,8 +34,10 @@ class Services{
             }
             $service = ServiceMapper::createService($serviceDto);
             $service->company()->associate($company);
-            $service->save();
-            return $service;
+           
+            if($service->save()){
+                echo "Success: service created successfully";
+            }
         }catch(\Exception $ex){
             echo "Error: " . $ex->getMessage();
         }
@@ -54,8 +56,10 @@ class Services{
                                       . ' does not exist in company ' . $company->name);
             }
             $service = ServiceMapper::updateService($service,$updateServiceDto);
-            $service->save();
-            return $service;
+            
+            if($service->save()){
+                echo "Success: service updated successfully";
+            }
         }catch(\Exception $ex){
             echo "Error: " . $ex->getMessage();
         }
@@ -75,7 +79,7 @@ class Services{
                 throw new \Exception('Service with name ' . $service->name 
                                       . ' does not exist in company ' . $company->name);
             }
-            $service->delete();
+            return $service->delete();
         }catch(\Exception $ex){
             echo "Error: " . $ex->getMessage();
         }

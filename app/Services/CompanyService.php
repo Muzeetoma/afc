@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class CompanyService{
 
     private $companyRepository;
-    private int $maxCountries = 3;
+    private int $maxCountries = 9;
 
     public function __construct(CompanyRepository $companyRepository) {
         $this->companyRepository = $companyRepository;
@@ -40,8 +40,9 @@ class CompanyService{
         $company->email = $createCompanyDto->email;
         $company->country()->associate($createCompanyDto->country);
         $company->user()->associate($createCompanyDto->user);
-        $company->save();
-        return $company;
+        if($company->save()){
+            echo "Success: company created successfully";
+        }
     }
 
     public function add(AddCompanyDto $addCompanyDto){
@@ -77,7 +78,9 @@ class CompanyService{
                 }
             }
             $company = CompanyMapper::updateCompany($company,$updateCompanyDto);
-            $company->save();
+            if($company->save()){
+                echo "Success: company created successfully";
+            }
         }catch(\Exception $ex){
             echo "Error: " . $ex->getMessage();
         }
@@ -94,7 +97,9 @@ class CompanyService{
             if($company->user->id !== $user->id){
                 throw new \Exception('Company ' . $company->name . ' does not belong to you');   
             }
-            $company->delete();
+            if($company->delete()){
+                echo "Success: company deleted successfully";
+            }
         }catch(\Exception $ex){
             echo "Error: " . $ex->getMessage();
         }
