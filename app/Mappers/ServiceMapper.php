@@ -2,13 +2,14 @@
 
 namespace App\Mappers;
 use App\Models\Service;
+use App\Services\Dto\Service\ServiceDto;
 use App\Services\Dto\Service\UpdateServiceDto;
 
 class ServiceMapper{
 
-    public static function createService(string $name){
+    public static function createService(ServiceDto $serviceDto){
         $service = new Service();
-        $service->name = $name;
+        $service->name = $serviceDto->name;
         return $service;
     }
 

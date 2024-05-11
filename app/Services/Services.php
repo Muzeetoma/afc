@@ -32,7 +32,7 @@ class Services{
             if(!empty($service)){
                 throw new \Exception('Service with name ' . $service->name . ' exists in company ' . $company->name);
             }
-            $service = ServiceMapper::createService($serviceDto->name);
+            $service = ServiceMapper::createService($serviceDto);
             $service->company()->associate($company);
             $service->save();
             return $service;
@@ -66,7 +66,7 @@ class Services{
             //$user = Auth::user();
             $user = User::find(1);
             $userCompanies = $user->companies;
-            
+
             $service = $this->serviceRepository->findById($id);
             if(empty($service)){
                 throw new \Exception('Service does not exist ');
