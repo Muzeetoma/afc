@@ -3,7 +3,8 @@ import AdminLayout from '../../../Layouts/Auth.vue'
 import { Link } from '@inertiajs/vue3'
 
 defineProps({
-   services: Object
+   services: Object,
+   companyId: Number
  })
 </script>
 
@@ -20,7 +21,7 @@ defineProps({
             <h2 class="fw-bold">Your Services</h2>
           </div>
           <div class="p-1">
-            <Link :href="route('admin.services.create.view')" class="btn btn-dark rounded-0 mt-2 py-1 px-4">
+            <Link :href="route('admin.services.create.view',companyId)" class="btn btn-dark rounded-0 mt-2 py-1 px-4">
                     create
               </Link>
           </div>
@@ -63,6 +64,12 @@ defineProps({
       </div>
       <div class="col-12 col-md-2"></div>
     </div>
+
+    <center>
+      <Link :href="route('admin.company.view')" class="btn btn-outline-none rounded-0 mt-2 py-1">
+                   < back
+    </Link>
+    </center>
 
 </AdminLayout>
 </template>

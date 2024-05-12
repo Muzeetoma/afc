@@ -12,6 +12,7 @@ defineProps({
 const form = reactive({
   name: null,
   address: null,
+  image: null,
   email: null,
   password: null,
   mobile: null,
@@ -34,6 +35,12 @@ function signup() {
         <form @submit.prevent="signup" class="border mt-4 p-2 p-md-4">
 
            <div class="row">
+            <div class="col-12 mb-3">
+            <label for="image" class="form-label"></label>
+            <input type="file" class="form-control rounded-0" id="image" @input="form.image = $event.target.files[0]" placeholder="image">
+            <small class="text-danger ms-1" v-if="errors.image">{{ errors.image }}</small>
+            </div>
+
             <div class="col-12 col-md-6 mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control rounded-0" id="name" v-model="form.name" placeholder="name">
@@ -78,7 +85,7 @@ function signup() {
 
             <div class="col-12 col-md-6 mb-3">
                 <label for="password_confirmation" class="form-label">Confirm password</label>
-                <input type="password_confirmation" class="form-control rounded-0" id="password_confirmation" v-model="form.password_confirmation" placeholder="Confirm password">
+                <input type="password" class="form-control rounded-0" id="password_confirmation" v-model="form.password_confirmation" placeholder="Confirm password">
                 <small class="text-danger ms-1" v-if="errors.password_confirmation">{{ errors.password_confirmation }}</small>
             </div>
             </div>

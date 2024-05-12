@@ -2,10 +2,12 @@
 import AdminLayout from '../../../Layouts/Auth.vue'
 import { reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 
 defineProps({
    errors: Object,
-   companies: Object
+   companies: Object,
+   companyId: Number
  })
 
 const form = reactive({
@@ -49,6 +51,11 @@ function submit() {
                     <i class="bi bi-exclamation-circle text-danger me-2"></i>
                     <small class="text-danger"> {{ $page.props.flash.error }} </small>
          </div>
+         <center> 
+            <Link :href="route('admin.services.view',companyId)" class="btn btn-outline-none rounded-0 mt-2 py-1">
+                   < back
+          </Link>
+        </center>
       </div>
       <div class="col-1 col-md-4"></div>
     </div>

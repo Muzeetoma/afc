@@ -6,6 +6,10 @@ import { Link } from '@inertiajs/vue3'
 defineProps({ 
   companies: Object
  })
+
+ function getFirstLetter(names){
+  return names.charAt(0)
+}
 </script>
 
 <template>
@@ -22,7 +26,7 @@ defineProps({
         <div class="container border rounded-1">
           <div class="d-flex mt-3">
             <div class="p-2">
-              <h1 class="py-1 px-3 bg-dark text-light rounded-3">C</h1>
+              <h1 class="py-1 px-3 bg-dark text-light rounded-3">{{ getFirstLetter(company.name ) }}</h1>
             </div>
             <div class="p-1 ms-3"> 
               <h6 class="mt-2 mb-0 fw-bold">{{ company.name }}</h6>

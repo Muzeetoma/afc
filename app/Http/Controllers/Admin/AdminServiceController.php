@@ -27,14 +27,20 @@ class AdminServiceController extends Controller
         }
         $services = $this->services->getByCompanyId($id);
         return Inertia::render('Admin/Services/Index',[
-            'services' => $services
+            'services' => $services,
+            'companyId'=>$id
         ]);
     }
 
-    public function createServiceView(){
+    public function createServiceView($id){
+        if(empty($id)){
+            session()->flash('error', 'company id to create services must be provided');
+            return;
+        }
         $companies = Auth::user()->companies()->get();
         return Inertia::render('Admin/Services/ServiceCreate',[
-            'companies' => $companies
+            'companies' => $companies,
+            'companyId'=>$id
         ]);
     }
 

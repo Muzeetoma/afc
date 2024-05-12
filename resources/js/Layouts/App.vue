@@ -1,5 +1,17 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
+import { computed } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+
+const page = usePage()
+
+const authUser = computed(() => page.props.auth.user)
+
+function getFirstWord(names){
+  let firstName = names.split(" ");
+  return firstName[0];
+}
+
 </script>
 
 <template>
@@ -16,15 +28,15 @@ import { Link } from '@inertiajs/vue3'
               <li class="nav-item">
                 <Link href="/" class="nav-link">Home</Link>
               </li>
-            
               <li class="nav-item">
-                <Link :href="route('admin.company.view')" class="nav-link me-4">Admin</Link>
+                <Link v-if="authUser" :href="route('admin.company.view')" class="nav-link me-4">Admin</Link>
               </li>
             </ul>
             <div class="d-flex" role="search">
-                <Link :href="route('login.view')" class="nav-link me-3">Login</Link>
-                <Link :href="route('signup.view')" class="nav-link me-3">Signup</Link>
-                <Link href="/logout" method="post" class="nav-link me-4">Logout</Link>
+                <Link v-if="!authUser" :href="route('login.view')" class="nav-link me-3">Login</Link>
+                <Link v-if="!authUser" :href="route('signup.view')" class="nav-link me-3">Register</Link>
+                <span v-if="authUser" class="fw-bold me-3">{{ getFirstWord(authUser.name)}}</span>
+                <Link v-if="authUser" href="/logout" method="post" class="nav-link me-4">Logout</Link>
             </div>
           </div>
         </div>

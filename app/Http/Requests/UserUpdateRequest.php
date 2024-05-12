@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules;
 
-class UserRegisterRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class UserRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'mobile'=> ['required','min:11','max:14'],
-            'address'=>['required','string', 'max:255'],
-            'image'=> ['required','image', 'mimes:jpg,png'],
-            'country'=>['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+           'name' => ['nullable', 'string', 'max:255'],
+            'mobile'=> ['nullable','min:11','max:14', 'unique:'.User::class],
+            'address'=>['nullable','string', 'max:255'],
+            'image'=>['nullable','image', 'mimes:jpg,png'],
+            'country'=>['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
         ];
     }
 }

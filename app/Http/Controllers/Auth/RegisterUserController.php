@@ -31,16 +31,20 @@ class RegisterUserController extends Controller{
 
         $userDto = new UserDto($registerRequest->name, 
                             $registerRequest->email, 
-                            'image.png', 
+                            $registerRequest->file('image'),
                             $registerRequest->mobile, 
                             $registerRequest->address, 
                             $registerRequest->password,
-                            $registerRequest->country);
+                            $registerRequest->country
+                        );
 
         $user = $this->userService->create($userDto);
-       
-        Auth::login($user);
         
-        return redirect('/');
+        if($user){
+            Auth::login($user);
+        
+            return redirect('/');
+        }
+      
     }
 }

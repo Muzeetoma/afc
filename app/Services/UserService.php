@@ -24,14 +24,15 @@ class UserService{
 
     public function create(UserDto $userDto){
         try {
-        $userByEmailOrMobile = $this->userRepository->findByEmailOrMobile($userDto->email,$userDto->mobile); 
-        if (!empty($userByEmailOrMobile)) {
-            if ($userByEmailOrMobile->email === $userDto->email) {
-                $error = 'User with email ' . $userDto->email . ' already exists';
-            } else {
-                $error = 'User with mobile ' . $userDto->mobile . ' already exists';
-            }
-            throw new \Exception($error);
+            $userByEmailOrMobile = $this->userRepository->findByEmailOrMobile($userDto->email, $userDto->mobile); 
+       
+            if (!empty($userByEmailOrMobile)) {
+                if ($userByEmailOrMobile->email === $userDto->email) {
+                    $error = 'User with email ' . $userDto->email . ' already exists';
+                } else {
+                    $error = 'User with mobile ' . $userDto->mobile . ' already exists';
+                }
+                throw new \Exception($error);
             }
 
             $country = $this->countryService->getByName($userDto->country);
@@ -40,8 +41,12 @@ class UserService{
                 throw new \Exception('Country with name ' . $userDto->country . ' does not exists');
             }
 
+            $userDto->image =  public_path() .'/'. $this->uploadImage($userDto->image);
+
             $user = UserMapper::createUser($userDto);
+
             $user->country()->associate($country);
+            
             if($user->save()){
                 session()->flash('message','User created successfully');
                 return $user;
@@ -54,6 +59,7 @@ class UserService{
     public function update(UpdateUserDto $updateUserDto){
         try{
             $user = Auth::user();
+            $oldImage = "";
             if(!empty($updateUserDto->mobile)){
                 $userByMobile = $this->userRepository->findByMobile($updateUserDto->mobile); 
                 if(!empty($userByMobile)){
@@ -76,13 +82,36 @@ class UserService{
                 $user->country()->associate($country);
             }
 
+            if(!empty($updateUserDto->image)){
+               $updateUserDto->image = public_path() .'/'.  $this->uploadImage($updateUserDto->image);
+               $oldImage = $user->image;
+            }
+
             $user = UserMapper::updateUser($user, $updateUserDto);
+
             if($user->save()){
                 session()->flash('message','User updated successfully');
+                //delete image here
+                return $user;
             }
         } catch (\Exception $ex) {
             session()->flash('error', $ex->getMessage());
         }
     }
+
+    public function uploadImage($file){
+        try{
+             if(empty($file)){
+                 throw new \Exception('image file does not exist');
+             }
+             $imageName = $file->getClientOriginalName();
+             $ext = $file->getClientOriginalExtension();
+             $destinationPath = 'uploads';
+             $file->move($destinationPath, $imageName);
+             return $imageName . '.' . $ext;
+        } catch (\Exception $ex) {
+           session()->flash('error', $ex->getMessage());
+        }
+     }
 
 }

@@ -11,8 +11,8 @@ Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logo
 Route::get('/signup', [App\Http\Controllers\Auth\RegisterUserController::class, 'view'])->name('signup.view');
 Route::post('/signup', [App\Http\Controllers\Auth\RegisterUserController::class, 'register'])->name('signup');
 
-Route::put('/users/update', [App\Http\Controllers\UserController::class, 'update'])->middleware('auth');
-Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'delete'])->middleware('auth');
+Route::get('/users/update', [App\Http\Controllers\UserController::class, 'updateView'])->name('users.update.view')->middleware('auth');
+Route::post('/users/update', [App\Http\Controllers\UserController::class, 'update'])->middleware('auth');
 
 Route::get('/company/{id}', [App\Http\Controllers\CompanyController::class, 'getById'])->name('company.get');
 
@@ -25,7 +25,7 @@ Route::delete('/admin/company/{id}', [App\Http\Controllers\Admin\AdminCompanyCon
 
 Route::get('admin/services/view/{id}', [App\Http\Controllers\Admin\AdminServiceController::class, 'viewService'])->name('admin.services.view')->middleware('auth');
 Route::post('/admin/services/create', [App\Http\Controllers\Admin\AdminServiceController::class, 'createService'])->name('admin.services.create')->middleware('auth');
-Route::get('/admin/services/create', [App\Http\Controllers\Admin\AdminServiceController::class, 'createServiceView'])->name('admin.services.create.view')->middleware('auth');
+Route::get('/admin/services/create/{id}', [App\Http\Controllers\Admin\AdminServiceController::class, 'createServiceView'])->name('admin.services.create.view')->middleware('auth');
 Route::get('/admin/services/update/{id}', [App\Http\Controllers\Admin\AdminServiceController::class, 'updateServiceView'])->name('admin.services.update.view')->middleware('auth');
 Route::put('/admin/services/{id}', [App\Http\Controllers\Admin\AdminServiceController::class, 'updateService'])->name('admin.services.update')->middleware('auth');
 Route::delete('/admin/services/{id}', [App\Http\Controllers\Admin\AdminServiceController::class, 'deleteService'])->name('admin.services.delete')->middleware('auth');

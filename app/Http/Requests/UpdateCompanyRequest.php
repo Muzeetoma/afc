@@ -22,8 +22,8 @@ class UpdateCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'min:3',
-            'email'=>'email|min:6',
+            'name'=>'nullable|min:3',
+            'email'=>'nullable|email|min:6',
         ];
     }
 }
