@@ -1,21 +1,20 @@
 <script setup>
-import AdminLayout from '../../Layouts/Auth.vue'
-import { Head } from '@inertiajs/vue3'
-import { Link } from '@inertiajs/vue3'
+import AdminLayout from '../../../Layouts/Auth.vue'
 import { reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 defineProps({
-   errors: Object
+   errors: Object,
+   companies: Object
  })
 
 const form = reactive({
-  name: null,
-  email: null,
+  service: null,
+  company_id: null,
 })
 
 function submit() {
-  router.post('/companies', form)
+  router.post('/admin/services/create', form)
 }
 </script>
 
@@ -26,19 +25,22 @@ function submit() {
     <div class="row">
       <div class="col-1 col-md-4"></div>
       <div class="col-10 col-md-4">
-        <h2 class="fw-bold">Create Company</h2>
+        <h2 class="fw-bold">Create services</h2>
 
         <form @submit.prevent="submit" class="border mt-4 p-2 p-md-4">
+          <div class="mb-3">
+              <label for="service" class="form-label">Company</label>
+              <select class="form-select" v-model="form.company_id">
+              <option v-for="company in companies" id="company_id" :value=company.id >{{ company.name }}</option>
+            </select>
+          </div>
+
             <div class="mb-3">
-                <label for="name" class="form-label">Company name</label>
-                <input type="text" class="form-control rounded-0" id="name" v-model="form.name" placeholder="Enter company name">
-                <small class="text-danger ms-1" v-if="errors.name">{{ errors.name }}</small>
+                <label for="service" class="form-label">Service</label>
+                <input type="text" class="form-control rounded-0" id="service" v-model="form.service" placeholder="Enter company service">
+                <small class="text-danger ms-1" v-if="errors.service">{{ errors.service }}</small>
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Company email</label>
-                <input type="email" class="form-control rounded-0" id="email" v-model="form.email" placeholder="Enter company email">
-                <small class="text-danger ms-1" v-if="errors.email">{{ errors.email }}</small>
-            </div>
+          
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-dark rounded-0">Submit</button>
             </div>

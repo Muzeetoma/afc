@@ -17,10 +17,7 @@ import { Link } from '@inertiajs/vue3'
                 <Link href="/" class="nav-link">Home</Link>
               </li>
               <li class="nav-item">
-                <Link :href="route('company.view')" class="nav-link">Add company</Link>
-              </li>
-              <li class="nav-item">
-                <Link :href="route('services.view')" class="nav-link">Add services</Link>
+                <Link :href="route('admin.company.view')" class="nav-link">Manage Company</Link>
               </li>
             </ul>
             <div class="d-flex" role="search">         

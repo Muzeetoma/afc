@@ -16,19 +16,15 @@ import { Link } from '@inertiajs/vue3'
               <li class="nav-item">
                 <Link href="/" class="nav-link">Home</Link>
               </li>
+            
               <li class="nav-item">
-                <Link :href="route('login.view')" class="nav-link">Login</Link>
-              </li>
-              
-              <li class="nav-item">
-                <Link :href="route('signup.view')" class="nav-link">Signup</Link>
-              </li>
-              <li class="nav-item">
-                <Link :href="route('company.view')" class="nav-link me-4">Admin</Link>
+                <Link :href="route('admin.company.view')" class="nav-link me-4">Admin</Link>
               </li>
             </ul>
             <div class="d-flex" role="search">
-              <Link href="/logout" method="post" class="nav-link me-4">Logout</Link>
+                <Link :href="route('login.view')" class="nav-link me-3">Login</Link>
+                <Link :href="route('signup.view')" class="nav-link me-3">Signup</Link>
+                <Link href="/logout" method="post" class="nav-link me-4">Logout</Link>
             </div>
           </div>
         </div>

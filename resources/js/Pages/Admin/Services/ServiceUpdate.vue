@@ -1,22 +1,19 @@
 <script setup>
-import AdminLayout from '../../Layouts/Auth.vue'
-import { Head } from '@inertiajs/vue3'
-import { Link } from '@inertiajs/vue3'
+import AdminLayout from '../../../Layouts/Auth.vue'
 import { reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 defineProps({
    errors: Object,
-   companies: Object
+   service: Object
  })
 
 const form = reactive({
   service: null,
-  company_id: null,
 })
 
-function submit() {
-  router.post('/services', form)
+function submit(id) {
+  router.put(`/admin/services/${id}`, form)
 }
 </script>
 
@@ -27,18 +24,17 @@ function submit() {
     <div class="row">
       <div class="col-1 col-md-4"></div>
       <div class="col-10 col-md-4">
-        <h2 class="fw-bold">Create services</h2>
+        <h2 class="fw-bold">Update service</h2>
 
-        <form @submit.prevent="submit" class="border mt-4 p-2 p-md-4">
-          <div class="mb-3">
-              <label for="service" class="form-label">Company</label>
-              <select class="form-select" v-model="form.company_id">
-              <option v-for="company in companies" id="company_id" :value=company.id >{{ company.name }}</option>
-            </select>
-          </div>
+        <h6>Preview</h6>
+        <small>
+           {{ service.name }}
+        </small>
 
+        <br>
+        <form @submit.prevent="submit(service.id)" class="border mt-4 p-2 p-md-4">
             <div class="mb-3">
-                <label for="service" class="form-label">Service</label>
+                <label for="service" class="form-label">New Service</label>
                 <input type="text" class="form-control rounded-0" id="service" v-model="form.service" placeholder="Enter company service">
                 <small class="text-danger ms-1" v-if="errors.service">{{ errors.service }}</small>
             </div>

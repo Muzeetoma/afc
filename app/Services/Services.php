@@ -21,6 +21,14 @@ class Services{
         $this->companyRepository = $companyRepository;
     }
 
+    public function getByCompanyId(int $id){
+        return $this->serviceRepository->findByCompanyId($id);
+    }
+
+    public function getById(int $id){
+        return $this->serviceRepository->findById($id);
+    }
+
     public function create(ServiceDto $serviceDto){
         try{
             $company = $this->companyRepository->findById($serviceDto->companyId);
@@ -45,14 +53,10 @@ class Services{
 
     public function update(UpdateServiceDto $updateServiceDto){
         try{
-            $company = $this->companyRepository->findById($updateServiceDto->companyId);
-            if(empty($company)){
-                throw new \Exception('Company with id ' . $updateServiceDto->companyId . ' does not exist');
-            }
-            $service = $this->serviceRepository->findByIdAndCompany($updateServiceDto->serviceId, $company->id);
+            $service = $this->serviceRepository->findById($updateServiceDto->serviceId);
             if(empty($service)){
                 throw new \Exception('Service with name ' . $updateServiceDto->companyId 
-                                      . ' does not exist in company ' . $company->name);
+                                      . ' does not exist ');
             }
             $service = ServiceMapper::updateService($service,$updateServiceDto);
             

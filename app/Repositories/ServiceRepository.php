@@ -7,8 +7,9 @@ use App\Models\Company;
 
 class ServiceRepository{
     
-    public function findByCompany(Company $company){
-        return Service::whereBelongsTo($company)->get();
+    public function findByCompanyId(int $companyId){
+        return Service::where('company_id','=',$companyId)
+                        ->get();
     }
 
     public function findByNameAndCompany(string $name,int $companyId){
