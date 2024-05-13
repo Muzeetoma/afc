@@ -1,5 +1,5 @@
 <script setup>
-import AdminLayout from '../../../Layouts/Auth.vue'
+import AppLayout from '../../../Layouts/App.vue'
 import { Link } from '@inertiajs/vue3'
 
 defineProps({
@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-  <AdminLayout>
+  <AppLayout>
     <br><br>
 
     <div class="row">
@@ -22,18 +22,29 @@ defineProps({
           <div class="p-1">
             <h2 class="fw-bold">Your Companies</h2>
           </div>
-          <div class="p-1">
+          <div class="p-1" v-if="companies.length !== 0">
             <Link :href="route('admin.company.create.view')" class="btn btn-dark rounded-0 mt-2 py-1 px-4">
                     create
               </Link>
           </div>
         </div>
+
+        <div v-if="companies.length === 0 " class="container py-4 mb-3" >
+          <br><br>
+          <center>
+            <h1>You have no companies</h1>
+            <Link :href="route('admin.company.create.view')" class="btn btn-outline-dark rounded-0 mt-4 py-2 px-4">
+                    Create a new company
+              </Link>
+          </center>
+        </div>
+        
         <div class="row mt-4">
-        <div class="col-12 mb-3"  v-for="company in companies">
-          <div class="container border-bottom rounded-1">
+        <div class="col-12 mb-3" v-for="company in companies">
+          <div class="container border-top rounded-1">
             
             <div class="row">
-              <div class="col-12 col-md-10">
+              <div class="col-12 col-md-9">
                 <div class="d-flex mt-3">
               <div class="p-2">
                 <h1 class="py-1 px-3 bg-dark text-light rounded-3">{{ getFirstLetter(company.name) }}</h1>
@@ -43,7 +54,7 @@ defineProps({
               </div>
             </div>
               </div>
-              <div class="col-12 col-md-2">
+              <div class="col-12 col-md-3">
 
               <div class="d-flex justiify-content-end mt-4">
                 <div class="p-1">
@@ -75,5 +86,5 @@ defineProps({
       <div class="col-12 col-md-2"></div>
     </div>
 
-</AdminLayout>
+</AppLayout>
 </template>

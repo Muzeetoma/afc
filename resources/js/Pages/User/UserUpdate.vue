@@ -1,14 +1,14 @@
 <script setup>
-import { Head } from '@inertiajs/vue3'
-import { Link } from '@inertiajs/vue3'
 import { reactive } from 'vue'
-import AdminLayout from '../../Layouts/Auth.vue'
+import AppLayout from '../../Layouts/App.vue'
 import { router } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 
 defineProps({
    errors: Object,
-   user:Object,
-   countries: Object
+   user: Object,
+   countries: Object,
+   userCountry: Object
  })
 
 const form = reactive({
@@ -25,12 +25,12 @@ function update() {
 } 
 
 function renderImage(imagename){
-    return '../../../'+imagename;
+    return '/uploads/'+imagename;
 }
 </script>
 
 <template>
-<AdminLayout>
+<AppLayoout>
     <br><br>
 
 <div class="row">
@@ -41,8 +41,10 @@ function renderImage(imagename){
 
        <div class="row">
 
+        
         <div class="col-12 mb-3">
-            <img :src=renderImage(user.image) height="34px" width="34px">
+            <img :src=renderImage(user.image) height="54px" width="54px" class="rounded-circle" />
+            <br><br>
             <input type="file" class="form-control rounded-0" id="image"  @input="form.image = $event.target.files[0]" placeholder="image">
             <small class="text-danger ms-1" v-if="errors.image">{{ errors.image }}</small>
         </div>
@@ -72,7 +74,7 @@ function renderImage(imagename){
         </div>
         <div class="col-12 ">
           <div class="mb-3">
-          <label for="service" class="form-label">{{ user.country.name }}</label>
+          <label for="service" class="form-label"><span class="fw-bold">Country:</span> {{ userCountry.name }}</label>
           <select class="form-select" v-model="form.country">
           <option v-for="country in countries" id="country" :value=country.name >{{ country.name }}</option>
         </select>
@@ -93,8 +95,13 @@ function renderImage(imagename){
                 <i class="bi bi-exclamation-circle text-danger me-2"></i>
                 <small class="text-danger"> {{ $page.props.flash.error }} </small>
      </div>
+     <center>
+      <Link :href="route('admin.company.view')" class="btn btn-outline-none rounded-0 mt-2 py-1">
+                   < back
+    </Link>
+    </center>
   </div>
   <div class="col-1 col-md-3"></div>
 </div>
-</AdminLayout>
+</AppLayoout>
 </template>

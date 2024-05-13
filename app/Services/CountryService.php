@@ -19,4 +19,8 @@ class CountryService{
     public function getAll(){
         return $this->countryRepository->findAll();
     }
+
+    public function getById(int $id){
+        return $this->countryRepository->findById($id);
+    }
 }

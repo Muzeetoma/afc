@@ -1,5 +1,5 @@
 <script setup>
-import AdminLayout from '../../../Layouts/Auth.vue'
+import AppLayout from '../../../Layouts/App.vue'
 import { Link } from '@inertiajs/vue3'
 
 defineProps({
@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-  <AdminLayout>
+  <AppLayout>
     <br><br>
 
     <div class="row">
@@ -71,5 +71,5 @@ defineProps({
     </Link>
     </center>
 
-</AdminLayout>
+</AppLayout>
 </template>

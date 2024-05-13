@@ -22,11 +22,13 @@ class UserController extends Controller
     }
 
     public function updateView(){
-        $user = Auth::user()->with('country')->first();
+        $user = Auth::user();
         $countries = $this->countryService->getAll();
+        $userCountry = $this->countryService->getById($user->country_id);
         return Inertia::render('User/UserUpdate',[
             'user' => $user,
-            'countries'=>$countries
+            'countries'=>$countries,
+            'userCountry'=>$userCountry
         ]);
     }
 

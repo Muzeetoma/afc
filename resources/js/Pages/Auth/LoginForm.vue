@@ -55,7 +55,7 @@ function login() {
          <div class="d-flex justify-content-center">
             <div class="p-1"><Link href="/" class="nav-link">Home</Link> </div>
             <div class="p-1"><i class="bi bi-dot"></i></div>
-            <div class="p-1"><Link :href="route('signup.view')" class="nav-link">Signup</Link></div>
+            <div class="p-1"><Link :href="route('signup.view')" class="nav-link">Register</Link></div>
          </div>
         </form>
         <div class="container mt-3 p-2 text-center border rounded-3" v-if="$page.props.flash.error">

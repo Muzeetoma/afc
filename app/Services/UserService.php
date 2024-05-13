@@ -41,7 +41,7 @@ class UserService{
                 throw new \Exception('Country with name ' . $userDto->country . ' does not exists');
             }
 
-            $userDto->image =  public_path() .'/'. $this->uploadImage($userDto->image);
+            $userDto->image = $this->uploadImage($userDto->image);
 
             $user = UserMapper::createUser($userDto);
 
@@ -58,6 +58,17 @@ class UserService{
 
     public function update(UpdateUserDto $updateUserDto){
         try{
+            if (
+                empty($updateUserDto->name) &&
+                empty($updateUserDto->country) &&
+                empty($updateUserDto->address) &&
+                empty($updateUserDto->image) &&
+                empty($updateUserDto->mobile) &&
+                empty($updateUserDto->email)
+            ) {
+                throw new \Exception('No value was added to be updated.');  
+            } 
+
             $user = Auth::user();
             $oldImage = "";
             if(!empty($updateUserDto->mobile)){
@@ -83,7 +94,7 @@ class UserService{
             }
 
             if(!empty($updateUserDto->image)){
-               $updateUserDto->image = public_path() .'/'.  $this->uploadImage($updateUserDto->image);
+               $updateUserDto->image = $this->uploadImage($updateUserDto->image);
                $oldImage = $user->image;
             }
 
@@ -108,7 +119,7 @@ class UserService{
              $ext = $file->getClientOriginalExtension();
              $destinationPath = 'uploads';
              $file->move($destinationPath, $imageName);
-             return $imageName . '.' . $ext;
+             return $imageName;
         } catch (\Exception $ex) {
            session()->flash('error', $ex->getMessage());
         }

@@ -30,7 +30,7 @@ class UserFactory extends Factory
 
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => 'muze@gmail.com',
             'image' => 'image.jpg',
             'mobile' => implode('', $numbers),
             'address' => fake()->address(),      

@@ -31,12 +31,15 @@ function getFirstWord(names){
               <li class="nav-item">
                 <Link v-if="authUser" :href="route('admin.company.view')" class="nav-link me-4">Admin</Link>
               </li>
+              <li class="nav-item">
+                <Link v-if="authUser" :href="route('users.update.view')" class="nav-link">Profile</Link>
+              </li>
             </ul>
             <div class="d-flex" role="search">
                 <Link v-if="!authUser" :href="route('login.view')" class="nav-link me-3">Login</Link>
                 <Link v-if="!authUser" :href="route('signup.view')" class="nav-link me-3">Register</Link>
-                <span v-if="authUser" class="fw-bold me-3">{{ getFirstWord(authUser.name)}}</span>
-                <Link v-if="authUser" href="/logout" method="post" class="nav-link me-4">Logout</Link>
+                <span v-if="authUser" class="fw-bold me-3"><i class="bi bi-person-fill fw-bold"></i> {{ getFirstWord(authUser.name)}}</span>
+                <Link v-if="authUser" href="/logout" method="post" class="nav-link me-4 text-danger">Logout</Link>
             </div>
           </div>
         </div>

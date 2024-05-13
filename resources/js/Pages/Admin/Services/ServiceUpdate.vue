@@ -1,5 +1,5 @@
 <script setup>
-import AdminLayout from '../../../Layouts/Auth.vue'
+import AppLayout from '../../../Layouts/App.vue'
 import { reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { Link } from '@inertiajs/vue3'
@@ -19,7 +19,7 @@ function submit(id) {
 </script>
 
 <template>
-  <AdminLayout>
+  <AppLayout>
     <br><br>
 
     <div class="row">
@@ -57,5 +57,5 @@ function submit(id) {
       <div class="col-1 col-md-4"></div>
     </div>
 
-</AdminLayout>
+</AppLayout>
 </template>
