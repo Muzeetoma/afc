@@ -26,6 +26,17 @@ defineProps({
               </Link>
           </div>
         </div>
+
+        <div v-if="services.length === 0 " class="container py-4 mb-3" >
+          <br><br>
+          <center>
+            <h1>You have no services</h1>
+            <Link :href="route('admin.services.create.view',companyId)" class="btn btn-outline-dark rounded-0 mt-4 py-2 px-4">
+                    Create a new Service
+              </Link>
+          </center>
+        </div>
+
         <div class="row mt-4">
         <div class="col-12 mb-3"  v-for="service in services">
           <div class="container border-bottom rounded-1">
