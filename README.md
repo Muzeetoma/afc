@@ -5,3 +5,7 @@ Then:
 Open a new terminal <br>
 Then run : 
 ```npm run dev```
+<br>
+Default user is:<br>
+muze@gmail.com and <br>
+password is password
