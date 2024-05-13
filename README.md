@@ -8,4 +8,5 @@ Then run :
 <br>
 Default user is:<br>
 muze@gmail.com and <br>
-password is password
+password is password <br>
+Open on http://localhost:8000/
