@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class CompanyService{
 
     private $companyRepository;
-    private int $maxCountries = 9;
+    private int $maxCountries = 3;
 
     public function __construct(CompanyRepository $companyRepository) {
         $this->companyRepository = $companyRepository;
