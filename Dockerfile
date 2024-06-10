@@ -1,8 +1,6 @@
 # Use the official PHP image as base
 FROM php:8.2-fpm
 
-FROM node:18.18-alpine3.17
-
 # Set working directory
 WORKDIR /app
 
@@ -27,8 +25,6 @@ COPY . .
 
 # Install dependencies
 RUN composer install
-
-RUN npm install
 
 # Expose port
 EXPOSE 9007

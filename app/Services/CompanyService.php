@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class CompanyService{
 
     private $companyRepository;
-    private int $maxCountries = 3;
+    private int $maxCompanies = 3;
 
     public function __construct(CompanyRepository $companyRepository) {
         $this->companyRepository = $companyRepository;
@@ -49,8 +49,8 @@ class CompanyService{
     public function add(AddCompanyDto $addCompanyDto){
         try{ 
             $user = Auth::user();
-            if($user->companies->count() === $this->maxCountries){
-                throw new \Exception('You can only have a maximum of ' . $this->maxCountries .' countries'); 
+            if($user->companies->count() === $this->maxCompanies){
+                throw new \Exception('You can only have a maximum of ' . $this->maxCompanies .' countries'); 
             }
             $country = $user->country;
             $createCompanyDto = new CreateCompanyDto($addCompanyDto->name, 
